@@ -23,7 +23,7 @@ public class SeleniumPool {
     DesiredCapabilities caps;
     caps = new DesiredCapabilities();
     caps.setJavascriptEnabled(true);
-    caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, "/Users/aliaksei/Soft/phantomjs-2.1.1-macosx/bin/phantomjs");
+    caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, "C:\\Users\\Alexey\\Desktop\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe");
 
     pool = new LinkedBlockingQueue<>(10);
     try {
@@ -32,8 +32,8 @@ public class SeleniumPool {
       pool.put(new PhantomJSDriver(caps));
       pool.put(new PhantomJSDriver(caps));
       LOGGER.info("Halfway inicializing drivers");
-      pool.put(new PhantomJSDriver(caps));
-      pool.put(new PhantomJSDriver(caps));
+//     pool.put(new PhantomJSDriver(caps));
+//     pool.put(new PhantomJSDriver(caps));
       pool.put(new PhantomJSDriver(caps));
       pool.put(new PhantomJSDriver(caps));
       pool.put(new PhantomJSDriver(caps));

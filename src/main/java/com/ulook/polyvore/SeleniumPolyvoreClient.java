@@ -79,7 +79,7 @@ public class SeleniumPolyvoreClient {
       LOGGER.info("Persisted ::" + i);
       ObjectMapper om = new ObjectMapper();
 
-      File dir = new File("output/" + outfit.getOutfitName().replaceAll("/", "").trim().replaceAll(" ", ""));
+      File dir = new File("output\\" + outfit.getOutfitName().replaceAll("\\\\", "").trim().replaceAll(" ", ""));
       dir.mkdirs();
 
       File outputfile = new File(dir, "outfit.png");
@@ -93,10 +93,10 @@ public class SeleniumPolyvoreClient {
       }
 
       outfit.getItemList().parallelStream().filter(im -> im.getItemImage() != null && im.getItemTitle() != null).forEach(item -> {
-        File itemFile = new File(dir, item.getItemTitle().trim().replaceAll("/", "").trim().replaceAll(" ", "") + ".png");
+        File itemFile = new File(dir, item.getItemTitle().trim().replaceAll("\\\\", "").trim().replaceAll(" ", "") + ".png");
         try {
           ImageIO.write(item.getItemImage(), "png", itemFile);
-          FileUtils.writeStringToFile(new File(dir, item.getItemTitle().replaceAll("/", "").trim().replaceAll(" ", "") + ".json"), om.writeValueAsString(item));
+          FileUtils.writeStringToFile(new File(dir, item.getItemTitle().replaceAll("\\\\", "").trim().replaceAll(" ", "") + ".json"), om.writeValueAsString(item));
         } catch (Exception e) {
           e.printStackTrace();
         }
