@@ -17,11 +17,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
 public class SeleniumPolyvoreClient {
 
   private static final Logger LOGGER = Logger.getLogger(SeleniumPolyvoreClient.class.getCanonicalName());
+
+  private static AtomicInteger atomicInt = new AtomicInteger(0);
 
   public void retrieveOutfits(List<String> hrefs) {
     hrefs.parallelStream().filter(StringUtils::isNoneBlank).map(this::retrieveSingleOutfit).filter(Objects::nonNull).forEach(this::persistToFileSystem);
@@ -72,6 +75,8 @@ public class SeleniumPolyvoreClient {
 
   private boolean persistToFileSystem(Outfit outfit) {
     try {
+      int i = atomicInt.incrementAndGet();
+      LOGGER.info("Persisted ::" + i);
       ObjectMapper om = new ObjectMapper();
 
       File dir = new File("output/" + outfit.getOutfitName().replaceAll("/", "").trim().replaceAll(" ", ""));
@@ -135,7 +140,7 @@ public class SeleniumPolyvoreClient {
       String title = thingImg.getAttribute("title");
 
       List<WebElement> db = driver.findElements(By.className("bd"));
-      WebElement element = db.get(1).findElement(By.xpath(".//div"));
+      WebElement element = db.get(db.size() -1).findElement(By.xpath(".//div"));
       String desc = element.findElement(By.xpath(".//div")).getText();
 
       item.setItemImage(retrieveImage(imageHref));
